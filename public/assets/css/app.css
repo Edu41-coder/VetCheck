@@ -1,0 +1,111 @@
+:root {
+    --app-blue: #1877f2;
+    --app-blue-dark: #145dbf;
+    --app-surface: #ffffff;
+    --app-page: #f5f7fb;
+    --app-text: #111111;
+    --app-muted: #5f6b7a;
+    --app-border: #e5eaf1;
+}
+
+html,
+body {
+    background: var(--app-page);
+    color: var(--app-text);
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.bg-app {
+    background: var(--app-page);
+}
+
+.app-navbar {
+    background: linear-gradient(90deg, var(--app-blue), var(--app-blue-dark));
+    box-shadow: 0 8px 24px rgba(24, 119, 242, 0.18);
+}
+
+.navbar-brand,
+.navbar .nav-link {
+    color: #ffffff !important;
+}
+
+.app-logo-navbar {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    display: block;
+}
+
+.app-logo-login {
+    width: min(260px, 68vw);
+    height: auto;
+    object-fit: contain;
+}
+
+.navbar .nav-link {
+    opacity: 0.92;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus {
+    opacity: 1;
+}
+
+.app-surface {
+    background: var(--app-surface);
+    border: 1px solid var(--app-border);
+}
+
+.app-flash {
+    border: 1px solid var(--app-border);
+    background: #ffffff;
+    color: var(--app-text);
+}
+
+.app-hero {
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border: 1px solid var(--app-border);
+}
+
+.login-shell {
+    min-height: calc(100vh - 120px);
+    display: flex;
+    align-items: center;
+}
+
+.login-card {
+    background: #ffffff;
+    border: 1px solid var(--app-border);
+}
+
+.text-body-secondary {
+    color: var(--app-muted) !important;
+}
+
+.text-primary-emphasis {
+    color: var(--app-blue-dark) !important;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--app-blue);
+    --bs-btn-border-color: var(--app-blue);
+    --bs-btn-hover-bg: var(--app-blue-dark);
+    --bs-btn-hover-border-color: var(--app-blue-dark);
+}
+
+.card,
+.alert,
+.list-group-item,
+.form-control,
+.form-select {
+    border-color: var(--app-border);
+}
+
+@media (max-width: 767.98px) {
+    .app-surface {
+        border-radius: 1rem !important;
+    }
+}
