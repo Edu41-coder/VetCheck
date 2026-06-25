@@ -12,7 +12,8 @@ class Request
     public function path(): string
     {
         $uri = $_SERVER['REQUEST_URI'] ?? '/';
-        $path = parse_url($uri, PHP_URL_PATH) ?: '/';
+        $parsedPath = parse_url($uri, PHP_URL_PATH);
+        $path = $parsedPath !== false && $parsedPath !== null && $parsedPath !== '' ? $parsedPath : '/';
         $basePath = rtrim(Config::get('app')['base_url'] ?? '', '/');
 
         if ($basePath !== '' && str_starts_with($path, $basePath)) {
@@ -21,7 +22,12 @@ class Request
 
         $path = '/' . ltrim($path, '/');
 
-        return $path === '//' ? '/' : rtrim($path, '/') ?: '/';
+        if ($path === '//') {
+            return '/';
+        }
+
+        $trimmed = rtrim($path, '/');
+        return $trimmed !== '' ? $trimmed : '/';
     }
 
     public function input(string $key, mixed $default = null): mixed

@@ -1,3 +1,9 @@
+<?php
+/** @var string $csrf_token */
+$csrf_token = $csrf_token ?? \App\Core\Security::csrfToken();
+$baseUrl = \App\Core\Config::get('app')['base_url'] ?? '/Vet_Check/public';
+?>
+
 <div class="login-shell py-4">
     <div class="container">
         <div class="row justify-content-center">
@@ -7,7 +13,8 @@
                     <h1 class="h4 fw-semibold mb-2">Connexion VetCheck</h1>
                     <p class="text-body-secondary mb-4">Accédez à votre espace de travail clinique.</p>
 
-                    <form method="post" action="/Vet_Check/public/login" class="text-start">
+                    <form method="post" action="<?= htmlspecialchars($baseUrl, ENT_QUOTES, 'UTF-8') ?>/login" class="text-start">
+                        <input type="hidden" name="_csrf" value="<?= htmlspecialchars($csrf_token, ENT_QUOTES, 'UTF-8') ?>">
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control form-control-lg" id="email" name="email" required>

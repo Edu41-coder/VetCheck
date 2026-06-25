@@ -29,4 +29,30 @@ class ChecklistSection extends Model
 
         return (int) $this->db()->lastInsertId();
     }
+
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db()->prepare('SELECT * FROM checklist_sections WHERE id = :id LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        $section = $stmt->fetch();
+        return $section ?: null;
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $stmt = $this->db()->prepare(
+            'UPDATE checklist_sections SET title = :title, sort_order = :sort_order WHERE id = :id'
+        );
+        return $stmt->execute([
+            'id' => $id,
+            'title' => $data['title'],
+            'sort_order' => $data['sort_order'] ?? 0,
+        ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db()->prepare('DELETE FROM checklist_sections WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
+    }
 }

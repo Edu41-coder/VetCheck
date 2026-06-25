@@ -89,6 +89,21 @@ body {
     color: var(--app-blue-dark) !important;
 }
 
+.app-breadcrumb {
+    --bs-breadcrumb-divider: '›';
+    font-size: 0.9rem;
+}
+
+.app-breadcrumb a {
+    color: var(--app-blue-dark);
+    text-decoration: none;
+}
+
+.app-breadcrumb a:hover,
+.app-breadcrumb a:focus {
+    text-decoration: underline;
+}
+
 .btn-primary {
     --bs-btn-bg: var(--app-blue);
     --bs-btn-border-color: var(--app-blue);
@@ -102,6 +117,38 @@ body {
 .form-control,
 .form-select {
     border-color: var(--app-border);
+}
+
+.history-table-wrap {
+    max-height: 68vh;
+    overflow: auto;
+    border: 1px solid var(--app-border);
+    border-radius: 0.75rem;
+    background: #fff;
+}
+
+#history-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #f8fbff;
+    white-space: nowrap;
+}
+
+@media (max-width: 767.98px) {
+    #history-table {
+        font-size: 0.85rem;
+    }
+
+    #history-table td,
+    #history-table th {
+        padding: 0.5rem 0.4rem;
+    }
+
+    .pagination .page-link {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.8rem;
+    }
 }
 
 @media (max-width: 767.98px) {

@@ -34,4 +34,23 @@ class Checklist extends Model
 
         return (int) $this->db()->lastInsertId();
     }
+
+    public function update(int $id, array $data): bool
+    {
+        $stmt = $this->db()->prepare(
+            'UPDATE checklists SET slug = :slug, name = :name, description = :description WHERE id = :id'
+        );
+        return $stmt->execute([
+            'id' => $id,
+            'slug' => $data['slug'],
+            'name' => $data['name'],
+            'description' => $data['description'] ?? null,
+        ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db()->prepare('DELETE FROM checklists WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
+    }
 }

@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /Vet_Check/public/
+
+# Let Apache serve existing files/folders directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Otherwise route everything through front controller
+RewriteRule ^ index.php [QSA,L]

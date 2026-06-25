@@ -36,4 +36,37 @@ class ChecklistTask extends Model
 
         return (int) $this->db()->lastInsertId();
     }
+
+    public function findById(int $id): ?array
+    {
+        $stmt = $this->db()->prepare('SELECT * FROM checklist_tasks WHERE id = :id LIMIT 1');
+        $stmt->execute(['id' => $id]);
+        $task = $stmt->fetch();
+        return $task ?: null;
+    }
+
+    public function update(int $id, array $data): bool
+    {
+        $stmt = $this->db()->prepare(
+            'UPDATE checklist_tasks
+             SET section_id = :section_id,
+                 sort_order = :sort_order,
+                 title = :title,
+                 description = :description
+             WHERE id = :id'
+        );
+        return $stmt->execute([
+            'id' => $id,
+            'section_id' => $data['section_id'] ?? null,
+            'sort_order' => $data['sort_order'] ?? 0,
+            'title' => $data['title'],
+            'description' => $data['description'] ?? null,
+        ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db()->prepare('DELETE FROM checklist_tasks WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
+    }
 }

@@ -17,10 +17,13 @@
     <main class="container py-3 py-md-4">
         <?php require __DIR__ . '/../partials/flash.php'; ?>
         <div class="app-surface rounded-4 shadow-sm p-3 p-md-4">
+            <?php require __DIR__ . '/../partials/breadcrumb.php'; ?>
             <?php require $viewFile; ?>
         </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/Vet_Check/public/assets/js/datatable-pagination.js"></script>
+    <script src="/Vet_Check/public/assets/js/datatable.js"></script>
 </body>
 </html>
