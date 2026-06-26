@@ -28,7 +28,7 @@ class ChecklistController extends Controller
             'checklists' => $checklists,
             'user' => Auth::user(),
             'breadcrumbs' => [
-                ['label' => 'Accueil', 'url' => '/Vet_Check/public/'],
+                ['label' => 'Tableau de bord', 'url' => '/Vet_Check/public/dashboard'],
                 ['label' => 'Checklists', 'url' => '/Vet_Check/public/checklists'],
             ],
         ]);
@@ -43,7 +43,7 @@ class ChecklistController extends Controller
             'checklist' => null,
             'action' => 'store',
             'breadcrumbs' => [
-                ['label' => 'Accueil', 'url' => '/Vet_Check/public/'],
+                ['label' => 'Tableau de bord', 'url' => '/Vet_Check/public/dashboard'],
                 ['label' => 'Checklists', 'url' => '/Vet_Check/public/checklists'],
                 ['label' => 'Créer', 'url' => '/Vet_Check/public/checklists/create'],
             ],
@@ -99,7 +99,7 @@ class ChecklistController extends Controller
             'tasks' => $tasks,
             'action' => 'update',
             'breadcrumbs' => [
-                ['label' => 'Accueil', 'url' => '/Vet_Check/public/'],
+                ['label' => 'Tableau de bord', 'url' => '/Vet_Check/public/dashboard'],
                 ['label' => 'Checklists', 'url' => '/Vet_Check/public/checklists'],
                 ['label' => 'Modifier', 'url' => '/Vet_Check/public/checklists/edit?id=' . $id],
             ],
@@ -289,7 +289,7 @@ class ChecklistController extends Controller
             'selectedDate' => $date,
             'user' => Auth::user(),
             'breadcrumbs' => [
-                ['label' => 'Accueil', 'url' => '/Vet_Check/public/'],
+                ['label' => 'Tableau de bord', 'url' => '/Vet_Check/public/dashboard'],
                 ['label' => 'Checklists', 'url' => '/Vet_Check/public/checklists'],
                 ['label' => 'Exécution', 'url' => '/Vet_Check/public/checklists/run?id=' . $checklistId . '&date=' . urlencode($date)],
             ],
@@ -341,6 +341,8 @@ class ChecklistController extends Controller
             'checklist_id' => $request->input('checklist_id'),
             'date_from' => $request->input('date_from'),
             'date_to' => $request->input('date_to'),
+            'sort_by' => (string) ($request->input('sort_by') ?? 'checked_at'),
+            'sort_dir' => strtolower((string) ($request->input('sort_dir') ?? 'desc')),
         ];
 
         $taskCheckModel = new TaskCheck();
@@ -359,7 +361,7 @@ class ChecklistController extends Controller
             'checklists' => $checklists,
             'filters' => $filters,
             'breadcrumbs' => [
-                ['label' => 'Accueil', 'url' => '/Vet_Check/public/'],
+                ['label' => 'Tableau de bord', 'url' => '/Vet_Check/public/dashboard'],
                 ['label' => 'Checklists', 'url' => '/Vet_Check/public/checklists'],
                 ['label' => 'Historique', 'url' => '/Vet_Check/public/checklists/history'],
             ],

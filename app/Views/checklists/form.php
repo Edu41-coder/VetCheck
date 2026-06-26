@@ -36,7 +36,7 @@ $createMode = $action === 'store';
     </div>
     <div class="col-12">
         <button class="btn btn-primary"><?= $createMode ? 'Créer' : 'Mettre à jour' ?></button>
-        <a href="/Vet_Check/public/checklists" class="btn btn-link">Retour</a>
+        <a href="/Vet_Check/public/checklists" class="btn btn-outline-secondary btn-sm">Retour</a>
     </div>
 </form>
 

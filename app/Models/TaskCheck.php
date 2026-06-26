@@ -107,7 +107,21 @@ class TaskCheck extends Model
             $params['date_to'] = $filters['date_to'];
         }
 
-        $sql .= ' ORDER BY tc.checked_at DESC, tc.id DESC';
+        $sortMap = [
+            'date' => 'ci.date',
+            'checklist' => 'c.name',
+            'task' => 't.title',
+            'user' => 'u.name',
+            'checked_at' => 'tc.checked_at',
+        ];
+
+        $sortBy = (string) ($filters['sort_by'] ?? 'checked_at');
+        $sortColumn = $sortMap[$sortBy] ?? 'tc.checked_at';
+
+        $sortDir = strtolower((string) ($filters['sort_dir'] ?? 'desc'));
+        $sortDir = $sortDir === 'asc' ? 'ASC' : 'DESC';
+
+        $sql .= ' ORDER BY ' . $sortColumn . ' ' . $sortDir . ', tc.id DESC';
 
         $stmt = $this->db()->prepare($sql);
         $stmt->execute($params);

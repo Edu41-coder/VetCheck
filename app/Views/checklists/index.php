@@ -8,9 +8,12 @@
         <h2 class="h4 mb-1">Checklists</h2>
         <p class="text-body-secondary mb-0">Gestion des listes de contrôle cliniques.</p>
     </div>
-    <?php if (isset($user) && ($user['is_admin'] ?? 0) === 1): ?>
-        <a href="/Vet_Check/public/checklists/create" class="btn btn-primary">Nouvelle checklist</a>
-    <?php endif; ?>
+    <div class="d-flex align-items-center gap-2">
+        <a href="/Vet_Check/public/dashboard" class="btn btn-outline-secondary btn-sm">Retour</a>
+        <?php if (isset($user) && ($user['is_admin'] ?? 0) === 1): ?>
+            <a href="/Vet_Check/public/checklists/create" class="btn btn-primary">Nouvelle checklist</a>
+        <?php endif; ?>
+    </div>
 </div>
 
 <div class="row g-2 mb-3">
@@ -60,8 +63,8 @@
                     <td>
                         <div class="d-flex flex-wrap gap-2">
                             <a href="/Vet_Check/public/checklists/run?id=<?= $checklist['id'] ?>" class="btn btn-primary btn-sm">Exécuter</a>
-                            <a href="/Vet_Check/public/checklists/edit?id=<?= $checklist['id'] ?>" class="btn btn-outline-primary btn-sm">Voir / Modifier</a>
                             <?php if (isset($user) && ($user['is_admin'] ?? 0) === 1): ?>
+                                <a href="/Vet_Check/public/checklists/edit?id=<?= $checklist['id'] ?>" class="btn btn-outline-primary btn-sm">Voir / Modifier</a>
                                 <a href="/Vet_Check/public/checklists/delete?id=<?= $checklist['id'] ?>" class="btn btn-outline-danger btn-sm" onclick="return confirm('Supprimer cette checklist ?');">Supprimer</a>
                             <?php endif; ?>
                         </div>

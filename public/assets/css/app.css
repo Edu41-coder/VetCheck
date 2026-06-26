@@ -60,9 +60,42 @@ body {
 }
 
 .app-flash {
+    border-width: 1px;
+}
+
+.app-modal .modal-content {
     border: 1px solid var(--app-border);
-    background: #ffffff;
-    color: var(--app-text);
+    border-radius: 0.9rem;
+}
+
+.app-modal .modal-header {
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 100%);
+    border-bottom: 1px solid var(--app-border);
+}
+
+.app-modal .modal-footer {
+    border-top: 1px solid var(--app-border);
+}
+
+/* Quick-link cards on dashboard */
+.app-quicklink-card {
+    border: 1px solid var(--app-border);
+    transition: box-shadow .15s ease, transform .15s ease, border-color .15s ease;
+    cursor: pointer;
+}
+
+.app-quicklink-card:hover {
+    box-shadow: 0 4px 16px rgba(24, 119, 242, 0.12);
+    transform: translateY(-2px);
+    border-color: var(--app-blue);
+}
+
+.app-quicklink-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .app-hero {
@@ -112,7 +145,6 @@ body {
 }
 
 .card,
-.alert,
 .list-group-item,
 .form-control,
 .form-select {

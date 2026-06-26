@@ -3,6 +3,32 @@
 /** @var array $users */
 /** @var array $checklists */
 /** @var array $filters */
+
+$currentSortBy = (string) ($filters['sort_by'] ?? 'checked_at');
+$currentSortDir = strtolower((string) ($filters['sort_dir'] ?? 'desc'));
+
+$buildSortUrl = static function (string $column) use ($filters, $currentSortBy, $currentSortDir): string {
+    $nextDir = ($currentSortBy === $column && $currentSortDir === 'asc') ? 'desc' : 'asc';
+
+    $query = [
+        'user_id' => (string) ($filters['user_id'] ?? ''),
+        'checklist_id' => (string) ($filters['checklist_id'] ?? ''),
+        'date_from' => (string) ($filters['date_from'] ?? ''),
+        'date_to' => (string) ($filters['date_to'] ?? ''),
+        'sort_by' => $column,
+        'sort_dir' => $nextDir,
+    ];
+
+    return '/Vet_Check/public/checklists/history?' . http_build_query($query);
+};
+
+$sortIndicator = static function (string $column) use ($currentSortBy, $currentSortDir): string {
+    if ($currentSortBy !== $column) {
+        return '↕';
+    }
+
+    return $currentSortDir === 'asc' ? '↑' : '↓';
+};
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
@@ -72,11 +98,41 @@
     <table id="history-table" class="table table-striped align-middle">
         <thead>
             <tr>
-                <th data-sort-index="0">Date</th>
-                <th data-sort-index="1">Checklist</th>
-                <th data-sort-index="2">Tâche</th>
-                <th data-sort-index="3">Utilisateur</th>
-                <th data-sort-index="4">Horodatage</th>
+                <th>
+                    <a href="<?= htmlspecialchars($buildSortUrl('date'), ENT_QUOTES, 'UTF-8') ?>"
+                       class="btn btn-sm btn-link p-0 text-decoration-none text-dark fw-semibold"
+                       aria-label="Trier par date">
+                        Date <span aria-hidden="true"><?= htmlspecialchars($sortIndicator('date'), ENT_QUOTES, 'UTF-8') ?></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="<?= htmlspecialchars($buildSortUrl('checklist'), ENT_QUOTES, 'UTF-8') ?>"
+                       class="btn btn-sm btn-link p-0 text-decoration-none text-dark fw-semibold"
+                       aria-label="Trier par checklist">
+                        Checklist <span aria-hidden="true"><?= htmlspecialchars($sortIndicator('checklist'), ENT_QUOTES, 'UTF-8') ?></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="<?= htmlspecialchars($buildSortUrl('task'), ENT_QUOTES, 'UTF-8') ?>"
+                       class="btn btn-sm btn-link p-0 text-decoration-none text-dark fw-semibold"
+                       aria-label="Trier par tâche">
+                        Tâche <span aria-hidden="true"><?= htmlspecialchars($sortIndicator('task'), ENT_QUOTES, 'UTF-8') ?></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="<?= htmlspecialchars($buildSortUrl('user'), ENT_QUOTES, 'UTF-8') ?>"
+                       class="btn btn-sm btn-link p-0 text-decoration-none text-dark fw-semibold"
+                       aria-label="Trier par utilisateur">
+                        Utilisateur <span aria-hidden="true"><?= htmlspecialchars($sortIndicator('user'), ENT_QUOTES, 'UTF-8') ?></span>
+                    </a>
+                </th>
+                <th>
+                    <a href="<?= htmlspecialchars($buildSortUrl('checked_at'), ENT_QUOTES, 'UTF-8') ?>"
+                       class="btn btn-sm btn-link p-0 text-decoration-none text-dark fw-semibold"
+                       aria-label="Trier par horodatage">
+                        Horodatage <span aria-hidden="true"><?= htmlspecialchars($sortIndicator('checked_at'), ENT_QUOTES, 'UTF-8') ?></span>
+                    </a>
+                </th>
             </tr>
         </thead>
         <tbody>

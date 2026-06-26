@@ -48,8 +48,8 @@ class User extends Model
 
     public function create(array $data): int
     {
-        $sql = 'INSERT INTO users (name, email, password_hash, role_id, is_admin, avatar_path)
-            VALUES (:name, :email, :password_hash, :role_id, :is_admin, :avatar_path)';
+        $sql = 'INSERT INTO users (name, email, password_hash, role_id, is_admin)
+            VALUES (:name, :email, :password_hash, :role_id, :is_admin)';
 
         $stmt = $this->db()->prepare($sql);
         $stmt->execute([
@@ -58,7 +58,6 @@ class User extends Model
             'password_hash' => $data['password_hash'],
             'role_id' => $data['role_id'],
             'is_admin' => $data['is_admin'] ?? 0,
-            'avatar_path' => $data['avatar_path'] ?? null,
         ]);
 
         return (int) $this->db()->lastInsertId();
@@ -70,8 +69,7 @@ class User extends Model
                 SET name = :name,
                     email = :email,
                     role_id = :role_id,
-                    is_admin = :is_admin,
-                    avatar_path = :avatar_path
+                    is_admin = :is_admin
                 WHERE id = :id';
 
         $stmt = $this->db()->prepare($sql);
@@ -81,7 +79,6 @@ class User extends Model
             'email' => $data['email'],
             'role_id' => $data['role_id'],
             'is_admin' => $data['is_admin'] ?? 0,
-            'avatar_path' => $data['avatar_path'] ?? null,
         ]);
     }
 
@@ -92,5 +89,11 @@ class User extends Model
             'id' => $id,
             'password_hash' => $passwordHash,
         ]);
+    }
+
+    public function delete(int $id): bool
+    {
+        $stmt = $this->db()->prepare('DELETE FROM users WHERE id = :id');
+        return $stmt->execute(['id' => $id]);
     }
 }

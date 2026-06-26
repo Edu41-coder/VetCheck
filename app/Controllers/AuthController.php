@@ -11,6 +11,12 @@ use App\Core\Security;
 
 class AuthController extends Controller
 {
+    public function redirectToLogin(Request $request): void
+    {
+        header('Location: ' . Config::get('app')['base_url'] . '/login');
+        exit;
+    }
+
     public function showLogin(Request $request): void
     {
         Security::requireGuest();
@@ -18,10 +24,6 @@ class AuthController extends Controller
         $this->render('auth/login', [
             'title' => 'Connexion',
             'csrf_token' => Security::csrfToken(),
-            'breadcrumbs' => [
-                ['label' => 'Accueil', 'url' => '/Vet_Check/public/'],
-                ['label' => 'Connexion', 'url' => '/Vet_Check/public/login'],
-            ],
         ]);
     }
 

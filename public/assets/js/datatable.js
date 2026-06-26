@@ -25,7 +25,58 @@
 
         function getCellValue(row, index) {
             var cell = row.children[index];
-            return (cell ? cell.textContent : '').trim().toLowerCase();
+            return (cell ? cell.textContent : '').trim();
+        }
+
+        function toSortableValue(rawValue) {
+            var value = (rawValue || '').trim();
+
+            // yyyy-mm-dd or yyyy-mm-dd hh:mm:ss
+            if (/^\d{4}-\d{2}-\d{2}(?:[ T]\d{2}:\d{2}:\d{2})?$/.test(value)) {
+                var normalized = value.replace(' ', 'T');
+                var timestamp = Date.parse(normalized);
+                if (!Number.isNaN(timestamp)) {
+                    return { type: 'number', value: timestamp };
+                }
+            }
+
+            // dd/mm/yyyy or dd/mm/yyyy hh:mm:ss
+            var frenchDateMatch = value.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s+(\d{2}):(\d{2}):(\d{2}))?$/);
+            if (frenchDateMatch) {
+                var dd = frenchDateMatch[1];
+                var mm = frenchDateMatch[2];
+                var yyyy = frenchDateMatch[3];
+                var hh = frenchDateMatch[4] || '00';
+                var mi = frenchDateMatch[5] || '00';
+                var ss = frenchDateMatch[6] || '00';
+                var isoLike = yyyy + '-' + mm + '-' + dd + 'T' + hh + ':' + mi + ':' + ss;
+                var frTimestamp = Date.parse(isoLike);
+                if (!Number.isNaN(frTimestamp)) {
+                    return { type: 'number', value: frTimestamp };
+                }
+            }
+
+            var numeric = Number(value.replace(',', '.'));
+            if (!Number.isNaN(numeric) && value !== '') {
+                return { type: 'number', value: numeric };
+            }
+
+            return { type: 'string', value: value.toLowerCase() };
+        }
+
+        function compareCells(aValue, bValue) {
+            var av = toSortableValue(aValue);
+            var bv = toSortableValue(bValue);
+
+            if (av.type === 'number' && bv.type === 'number') {
+                if (av.value < bv.value) return -1;
+                if (av.value > bv.value) return 1;
+                return 0;
+            }
+
+            if (av.value < bv.value) return -1;
+            if (av.value > bv.value) return 1;
+            return 0;
         }
 
         function applyFilters() {
@@ -44,10 +95,19 @@
             }
 
             state.filteredRows.sort(function (a, b) {
-                var av = getCellValue(a, state.sortColumn);
-                var bv = getCellValue(b, state.sortColumn);
-                if (av < bv) return state.sortDirection === 'asc' ? -1 : 1;
-                if (av > bv) return state.sortDirection === 'asc' ? 1 : -1;
+                var base = compareCells(
+                    getCellValue(a, state.sortColumn),
+                    getCellValue(b, state.sortColumn)
+                );
+
+                // For history table, date column often has duplicates.
+                // Use timestamp column as tie-breaker so Date sorting visibly changes rows.
+                if (base === 0 && table.id === 'history-table' && state.sortColumn === 0) {
+                    base = compareCells(getCellValue(a, 4), getCellValue(b, 4));
+                }
+
+                if (base < 0) return state.sortDirection === 'asc' ? -1 : 1;
+                if (base > 0) return state.sortDirection === 'asc' ? 1 : -1;
                 return 0;
             });
         }

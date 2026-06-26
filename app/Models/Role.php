@@ -13,6 +13,19 @@ class Role extends Model
         return $stmt->fetchAll();
     }
 
+    public function allBusinessRoles(): array
+    {
+        $stmt = $this->db()->query("SELECT * FROM roles WHERE name IN ('veto', 'asv') ORDER BY id ASC");
+        return $stmt->fetchAll();
+    }
+
+    public function isBusinessRoleId(int $id): bool
+    {
+        $stmt = $this->db()->prepare("SELECT id FROM roles WHERE id = :id AND name IN ('veto', 'asv') LIMIT 1");
+        $stmt->execute(['id' => $id]);
+        return (bool) $stmt->fetch();
+    }
+
     public function findByName(string $name): ?array
     {
         $stmt = $this->db()->prepare('SELECT * FROM roles WHERE name = :name LIMIT 1');
