@@ -22,7 +22,7 @@
                         <a class="nav-link" href="/Vet_Check/public/checklists">Checklists</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Vet_Check/public/checklists/history">Historique</a>
+                        <a class="nav-link" href="/Vet_Check/public/counters">Compteurs</a>
                     </li>
                 <?php endif; ?>
                 <?php if (Auth::check()): ?>

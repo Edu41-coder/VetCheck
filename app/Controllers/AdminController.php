@@ -22,10 +22,14 @@ class AdminController extends Controller
         $userModel = new User();
         $userCount = count($userModel->all());
 
+        $counterModel = new \App\Models\Counter();
+        $counterCount = count($counterModel->all());
+
         $this->render('admin/index', [
             'title' => 'Espace admin',
             'user' => Auth::user(),
             'userCount' => $userCount,
+            'counterCount' => $counterCount,
             'breadcrumbs' => [
                 ['label' => 'Tableau de bord', 'url' => '/Vet_Check/public/dashboard'],
                 ['label' => 'Espace admin', 'url' => '/Vet_Check/public/admin'],

@@ -1,6 +1,29 @@
 http://localhost/Vet_Check/public/
 
+Voici les commandes pour pousser vers le repo :
 
+# 1. Vérifier le statut
+git status
+
+# 2. Ajouter tous les changements
+git add .
+
+# 3. Créer un commit
+git commit -m "Réorganiser l'accès à l'historique - Supprimer le lien Historique de la navbar et du dashboard, consolider l'accès dans chaque section"
+
+# 4. Pousser vers la branche main
+git push origin main
+
+
+
+Ou en une seule ligne :
+
+git add . ; git commit -m "Réorganiser l'accès à l'historique" ; git push origin main
+
+
+importer modifs git
+git fetch origin
+git pull origin main
 
 # VetCheck
 

@@ -1,11 +1,12 @@
 <?php
 /** @var array $user */
 /** @var int $userCount */
+/** @var int $counterCount */
 ?>
 <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
         <h2 class="h4 mb-1">Espace admin</h2>
-        <p class="text-body-secondary mb-0">Bienvenue, <?= htmlspecialchars($user['name'] ?? '', ENT_QUOTES, 'UTF-8') ?>. Gérez ici les utilisateurs et les checklists de la clinique.</p>
+        <p class="text-body-secondary mb-0">Bienvenue, <?= htmlspecialchars($user['name'] ?? '', ENT_QUOTES, 'UTF-8') ?>. Gérez ici les utilisateurs, checklists et compteurs de la clinique.</p>
     </div>
     <a href="/Vet_Check/public/dashboard" class="btn btn-outline-secondary btn-sm">Retour</a>
 </div>
@@ -48,6 +49,26 @@
             <div class="d-flex gap-2 flex-wrap">
                 <a href="/Vet_Check/public/checklists" class="btn btn-success btn-sm">Voir les checklists</a>
                 <a href="/Vet_Check/public/checklists/create" class="btn btn-outline-success btn-sm">Créer une checklist</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+        <div class="card h-100 p-3">
+            <div class="d-flex align-items-center gap-3 mb-3">
+                <span class="app-admin-icon bg-info bg-opacity-10 text-info rounded-3 d-flex align-items-center justify-content-center" style="width:44px;height:44px;flex-shrink:0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M9 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM9 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm-.5-4a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm5.646 5.854a.5.5 0 0 0-.707-.707L10.207 7.5h-4.414l.646.646a.5.5 0 1 0 .707-.707l-1.5-1.5a.5.5 0 0 0-.707 0l-1.5 1.5a.5.5 0 1 0 .707.707L5.793 7.5h4.414l-.646-.646a.5.5 0 0 0-.707.707l1.5 1.5a.5.5 0 0 0 .707 0l1.5-1.5Z"/>
+                    </svg>
+                </span>
+                <div>
+                    <h3 class="h6 mb-0">Gestion des compteurs</h3>
+                    <p class="text-body-secondary small mb-0"><?= $counterCount ?> compteur<?= $counterCount > 1 ? 's' : '' ?> enregistré<?= $counterCount > 1 ? 's' : '' ?></p>
+                </div>
+            </div>
+            <div class="d-flex gap-2 flex-wrap">
+                <a href="/Vet_Check/public/counters" class="btn btn-info btn-sm">Voir les compteurs</a>
+                <a href="/Vet_Check/public/counters/create" class="btn btn-outline-info btn-sm">Créer un compteur</a>
             </div>
         </div>
     </div>

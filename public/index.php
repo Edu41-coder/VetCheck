@@ -8,6 +8,7 @@ use App\Core\Request;
 use App\Core\Router;
 use App\Controllers\AdminController;
 use App\Controllers\AuthController;
+use App\Controllers\CounterController;
 use App\Controllers\HomeController;
 
 require_once __DIR__ . '/../app/Core/Autoloader.php';
@@ -50,5 +51,21 @@ $router->post('/checklists/task-store', [\App\Controllers\ChecklistController::c
 $router->post('/checklists/task-update', [\App\Controllers\ChecklistController::class, 'taskUpdate'], ['role:admin']);
 $router->get('/checklists/task-delete', [\App\Controllers\ChecklistController::class, 'taskDelete'], ['role:admin']);
 $router->post('/checklists/section-store', [\App\Controllers\ChecklistController::class, 'sectionStore'], ['role:admin']);
+
+// Compteurs routes
+$router->get('/counters', [CounterController::class, 'index'], ['auth']);
+$router->get('/counters/run', [CounterController::class, 'run'], ['auth']);
+$router->post('/counters/add-count', [CounterController::class, 'addCount'], ['auth']);
+$router->get('/counters/history', [CounterController::class, 'history'], ['auth']);
+$router->get('/counters/chart', [CounterController::class, 'chart'], ['auth']);
+$router->get('/counters/create', [CounterController::class, 'create'], ['role:admin']);
+$router->post('/counters/store', [CounterController::class, 'store'], ['role:admin']);
+$router->get('/counters/edit', [CounterController::class, 'edit'], ['role:admin']);
+$router->post('/counters/update', [CounterController::class, 'update'], ['role:admin']);
+$router->get('/counters/delete', [CounterController::class, 'delete'], ['role:admin']);
+$router->post('/counters/section-store', [CounterController::class, 'sectionStore'], ['role:admin']);
+$router->post('/counters/item-store', [CounterController::class, 'itemStore'], ['role:admin']);
+$router->post('/counters/item-update', [CounterController::class, 'itemUpdate'], ['role:admin']);
+$router->get('/counters/item-delete', [CounterController::class, 'itemDelete'], ['role:admin']);
 
 $router->dispatch($request);
